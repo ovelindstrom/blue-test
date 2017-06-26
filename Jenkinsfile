@@ -1,21 +1,31 @@
 pipeline {
     agent any
+    environment {
+        DEPLOY_TO = 'default'
+    }
     parameters {
         string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: '')
         string(name: 'PERSON', defaultValue: 'mr Bean', description: 'Who\'s there?')
     }
     stages {
-        stage('Hello hey!') {
+        stage('Init'){
+            steps{
+                echo "This is just a demo."
+            }
+        }
+
+        stage('Say Hello') {
+            environment {
+                DEPLOY_TO = "${params.DEPLOY_ENV}"
+            }
             steps {
                 parallel(
                         "Hello1": {
-                            echo "Hello1 World ${params.name}"
+                            echo "Hello ${params.PERSON}!"
                             sh 'printenv'
-
                         },
                         "Hello2": {
-                            echo 'Hello2 World'
-
+                            echo "Your current deploy environment is ${env.DEPLOY_TO}"
                         }
                 )
             }
@@ -35,6 +45,7 @@ pipeline {
             }
             steps {
                 echo "YOU ARE NOT MY MUM!!!"
+
             }
         }
     }
