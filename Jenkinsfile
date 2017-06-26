@@ -5,7 +5,7 @@ pipeline {
       steps {
         parallel(
           "Hello1": {
-            echo 'Hello1 World!'
+            echo 'Hello1 World ${env.name}'
             sh 'printenv'
             
           },
