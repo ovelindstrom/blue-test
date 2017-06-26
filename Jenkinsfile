@@ -35,8 +35,8 @@ pipeline {
                 branch 'master'
             }
             steps {
-                input id: 'Mcd', message: 'Do you want chips whit that?', ok: 'Yes', submitterParameter: 'approver'
-                echo "Ok {approver}!"
+                def wantChips = input id: 'Mcd', message: 'Do you want chips whit that?', ok: 'Yes', submitterParameter: 'approver'
+                echo "Ok ${params.approver} you ${wantChips}!"
             }
         }
         stage('Slave') {
@@ -45,6 +45,13 @@ pipeline {
             }
             steps {
                 echo "YOU ARE NOT MY MUM!!!"
+
+            }
+        }
+
+        stage('End') {
+            steps {
+                echo "We are done!"
 
             }
         }
