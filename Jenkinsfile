@@ -5,50 +5,36 @@ pipeline {
         string(name: 'PERSON', defaultValue: 'mr Bean', description: 'Who\'s there?')
     }
     stages {
-        stage('Startup') {
-            steps {
-                echo "Hello ${params.PERSON}!"
-            }
-        }
         stage('Hello hey!') {
             steps {
                 parallel(
                         "Hello1": {
+                            echo "Hello1 World ${params.name}"
                             sh 'printenv'
 
                         },
                         "Hello2": {
                             echo 'Hello2 World'
+
                         }
                 )
             }
         }
         stage('Master') {
-            when {
+            when{
                 branch 'master'
             }
             steps {
                 input id: 'Mcd', message: 'Do you want chips whit that?', ok: 'Yes', submitterParameter: 'approver'
-                echo "Ok ${approver}!"
-            }
-            steps {
-                environment name: 'DEPLOY_ENV', value: 'production'
-                echo "Deploying to ${env.DEPLOY_ENV}"
+                echo "Ok {approver}!"
             }
         }
         stage('Slave') {
-            when {
-                not { branch 'master' }
+            when{
+                not {branch 'master'}
             }
             steps {
                 echo "YOU ARE NOT MY MUM!!!"
-                echo "Deploying to ${env.DEPLOY_ENV}"
-            }
-        }
-
-        stage('Good bye!') {
-            steps {
-                echo 'CU!'
             }
         }
     }
