@@ -35,8 +35,12 @@ pipeline {
                 branch 'master'
             }
             steps {
-                wantChips = input id: 'Mcd', message: 'Do you want chips whit that?', ok: 'Yes', submitterParameter: 'approver'
-                echo "Ok ${params.approver} you ${wantChips}!"
+                timeout(time:30, unit:'SECONDS') {
+                    script {
+                        def wantChips = input id: 'mcd', message: 'Do you want chips whit that?', ok: 'Yes', submitterParameter: 'approver'
+                        echo "Ok ${params.approver} you ${wantChips}!"
+                    }
+                }
             }
         }
         stage('Slave') {
