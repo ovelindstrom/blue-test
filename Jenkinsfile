@@ -1,12 +1,11 @@
 pipeline {
     agent any
-    environment
     parameters {
         string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: '')
         string(name: 'PERSON', defaultValue: 'mr Bean', description: 'Who\'s there?')
     }
     stages {
-        stage('Startup'){
+        stage('Startup') {
             echo "Hello ${params.PERSON}!"
 
         }
@@ -24,7 +23,7 @@ pipeline {
             }
         }
         stage('Master') {
-            when{
+            when {
                 branch 'master'
             }
             steps {
@@ -37,8 +36,8 @@ pipeline {
             }
         }
         stage('Slave') {
-            when{
-                not {branch 'master'}
+            when {
+                not { branch 'master' }
             }
             steps {
                 echo "YOU ARE NOT MY MUM!!!"
@@ -46,11 +45,10 @@ pipeline {
             }
         }
 
-        stage('Good bye!'){
-            steps{
+        stage('Good bye!') {
+            steps {
                 echo 'CU!'
             }
         }
-
     }
 }
