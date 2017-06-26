@@ -35,7 +35,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                def wantChips = input id: 'Mcd', message: 'Do you want chips whit that?', ok: 'Yes', submitterParameter: 'approver'
+                wantChips = input id: 'Mcd', message: 'Do you want chips whit that?', ok: 'Yes', submitterParameter: 'approver'
                 echo "Ok ${params.approver} you ${wantChips}!"
             }
         }
