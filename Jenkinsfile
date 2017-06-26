@@ -6,8 +6,9 @@ pipeline {
     }
     stages {
         stage('Startup') {
-            echo "Hello ${params.PERSON}!"
-
+            steps {
+                echo "Hello ${params.PERSON}!"
+            }
         }
         stage('Hello hey!') {
             steps {
