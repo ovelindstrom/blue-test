@@ -26,5 +26,6 @@ pipeline {
     name = 'ove'
     sex = 'male'
     deploy = 'true'
+    DOCKER_HOSTS = '192.168.99.100'
   }
 }
