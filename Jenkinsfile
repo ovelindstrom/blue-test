@@ -11,7 +11,7 @@ pipeline {
         parallel(
           "Hello1": {
             echo 'Hello1 World!'
-            sh 'sh \'printenv\''
+            sh 'printenv'
             
           },
           "Hello2": {
