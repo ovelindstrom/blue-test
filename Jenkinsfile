@@ -6,15 +6,16 @@ pipeline {
     
   }
   stages {
-    stage('') {
+    stage('error') {
       steps {
         parallel(
           "Hello1": {
-            echo 'Hello1 World ${env.name}'
+            echo 'Hello1 World!'
+            sh 'sh \'printenv\''
             
           },
           "Hello2": {
-            echo 'Hello2 World ${env.name}'
+            echo 'Hello2 World'
             
           }
         )
