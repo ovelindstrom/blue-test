@@ -1,5 +1,13 @@
 pipeline {
     agent any
+    options {
+        timestamp()
+        timeout(time:1, unit: 'HOURS')
+        buildDiscarder(logRotator(numToKeepStr:'1'))
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '7', artifactNumToKeepStr: '7', daysToKeepStr: '7', numToKeepStr: '7'))
+        disableConcurrentBuilds()
+
+    }
     environment {
         DEPLOY_TO = 'default'
     }
@@ -44,20 +52,11 @@ pipeline {
             }
             steps {
                 script {
-                    try {
-                        timeout(time: 30, unit: 'SECONDS') {
-                            rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'red', imageUrl: '', messageLink: '', text: 'Input waiting', thumbUrl: '', title: 'Input waiting', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':waiting:', message: 'We need your input'
-                            def wantChips = input id: 'mcd', message: 'Do you want chips whit that?', ok: 'Yes', submitterParameter: 'approver'
-                            echo "Ok ${params.approver} you ${wantChips}!"
-                        }
-                    }
 
-                    catch (err) {
-                        echo "Caught: ${err}"
-                        def user = err.getCauses()[0].getUser()
-                        if ('SYSTEM' == user.toString()) { // SYSTEM means timeout
-                            echo "The user is to good to recognice me."
-                        }
+                    timeout(time: 30, unit: 'SECONDS') {
+                        rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'red', imageUrl: '', messageLink: '', text: 'Input waiting', thumbUrl: '', title: 'Input waiting', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':waiting:', message: 'We need your input'
+                        def wantChips = input id: 'mcd', message: 'Do you want chips whit that?', ok: 'Yes', submitterParameter: 'approver'
+                        echo "Ok ${params.approver} you ${wantChips}!"
                     }
                 }
             }
