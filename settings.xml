@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 &#10; http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <mirrors>
+        <mirror>
+            <!--Send all requests to the public group -->
+            <id>nexus</id>
+            <mirrorOf>*</mirrorOf>
+            <url>https://nexus.aa.st/nexus/repository/public/</url>
+        </mirror>
+    </mirrors>
+    <activeProfiles>
+        <!--make the profile active all the time -->
+        <activeProfile>nexus</activeProfile>
+    </activeProfiles>
+    <profiles>
+        <profile>
+            <id>nexus</id>
+            <repositories>
+                <repository>
+                    <id>central</id>
+                    <url>http://central</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>central</id>
+                    <url>http://central</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+
+    <pluginGroups>
+        <pluginGroup>org.sonatype.plugins</pluginGroup>
+    </pluginGroups>
+    <!-- Create a master password first. See settings-sercurity.xml -->
+    <!--
+        See https://maven.apache.org/guides/mini/guide-encryption.html
+        on how to encrypt password
+    -->
+    <servers>
+        <server>
+            <id>nexus-st-deployment</id>
+            <username>msfss-jenkins</username>
+            <password>{2tj/kvcHTE0HZKrS+SO1qkqQhFZ6hW1yKou+++Q0vJQ=}</password>
+            <!--password>FRUKiSijt4</password-->
+        </server>
+        <server>
+            <id>nexus-deployment</id>
+            <username>msfss-teamcity</username>
+            <password>sdfergt@686skjdsd</password>
+        </server>
+    </servers>
+</settings>

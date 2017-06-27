@@ -30,11 +30,12 @@ pipeline {
                 parallel(
                         "Hello1": {
                             echo "Hello ${params.PERSON}!"
+                            echo "Your current deploy environment is ${env.DEPLOY_TO}"
                             sh 'printenv'
                             rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'blue', imageUrl: '', messageLink: '', text: 'Hello', thumbUrl: '', title: 'Hello1', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':wave:', message: 'Hello1'
                         },
-                        "Hello2": {
-                            echo "Your current deploy environment is ${env.DEPLOY_TO}"
+                        "Build": {
+                            sh './mvnw clean install'
                             rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'yellow', imageUrl: '', messageLink: '', text: 'Hello', thumbUrl: '', title: 'Hello2', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':baby:', message: 'Hello2'
                         },
                         "Hello3": {
