@@ -43,11 +43,21 @@ pipeline {
                 branch 'master'
             }
             steps {
-                timeout(time: 30, unit: 'SECONDS') {
-                    script {
+                try {
+                    timeout(time: 30, unit: 'SECONDS') {
+                        script {
 
-                        def wantChips = input id: 'mcd', message: 'Do you want chips whit that?', ok: 'Yes', submitterParameter: 'approver'
-                        echo "Ok ${params.approver} you ${wantChips}!"
+                            rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'red', imageUrl: '', messageLink: '', text: 'Input waiting', thumbUrl: '', title: 'Input waiting', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':waiting:', message: 'We need your input'
+                            def wantChips = input id: 'mcd', message: 'Do you want chips whit that?', ok: 'Yes', submitterParameter: 'approver'
+                            echo "Ok ${params.approver} you ${wantChips}!"
+                        }
+                    }
+                }
+                catch(err){
+                    echo "Caught: ${err}"
+                    def user = err.getCauses()[0].getUser()
+                    if('SYSTEM' == user.toString()) { // SYSTEM means timeout
+                        echo "The user is to good to recognice me."
                     }
                 }
             }
@@ -62,7 +72,7 @@ pipeline {
 
             }
         }
-        
+
 
         stage('End') {
             steps {
