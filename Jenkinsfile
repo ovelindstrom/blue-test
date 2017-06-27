@@ -88,7 +88,7 @@ pipeline {
                         "both-but-not-feature": {
                             stage("P-Both") {
                                 when {
-                                    anyOf{ branch 'slave'; branch 'master'}
+                                    anyOf { branch 'slave'; branch 'master' }
                                 }
                                 steps {
                                     echo "Parallels - Both but never anything else"
@@ -117,3 +117,4 @@ pipeline {
             }
         }
     }
+}
