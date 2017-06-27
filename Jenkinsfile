@@ -7,6 +7,10 @@ pipeline {
         disableConcurrentBuilds()
 
     }
+    tools {
+        jdk 'JDK8'
+        maven 'M3'
+    }
     environment {
         DEPLOY_TO = 'default'
     }
@@ -35,7 +39,7 @@ pipeline {
                             rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'blue', imageUrl: '', messageLink: '', text: 'Hello', thumbUrl: '', title: 'Hello1', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':wave:', message: 'Hello1'
                         },
                         "Build": {
-                            sh './mvnw -Dsettings.security=./settings-security.xml -s settings.xml -B clean deploy'
+                            sh 'mvn -Dsettings.security=./settings-security.xml -s settings.xml -B clean deploy'
                             rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'yellow', imageUrl: '', messageLink: '', text: 'Building', thumbUrl: '', title: 'Building', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':baby:', message: 'Hello2'
                         },
                         "Hello3": {
