@@ -53,7 +53,7 @@ pipeline {
                 script {
 
                     timeout(time: 30, unit: 'SECONDS') {
-                        rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'red', imageUrl: '', messageLink: '', text: 'Input waiting', thumbUrl: '', title: 'Input waiting', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':waiting:', message: 'We need your input'
+                        rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'red', imageUrl: '', messageLink: '', text: 'Input waiting', thumbUrl: '', title: 'Input waiting', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':waiting:', message: 'We need your input at ${env.RUN_DISPLAY_URL}'
 
                         script {
                             env.RELEASE_SCOPE = input id: 'release', message: 'What sort of release is it?', ok: 'Release!',
