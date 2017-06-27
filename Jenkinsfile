@@ -1,8 +1,8 @@
 pipeline {
-  agent any
+    agent any
     stages {
-        stage('Init'){
-            steps{
+        stage('Init') {
+            steps {
                 echo "This is just a demo."
                 rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'green', imageUrl: '', messageLink: '', text: 'Starting', thumbUrl: '', title: 'Starting', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':clapper:', message: 'Hi from Jenkins'
             }
@@ -32,11 +32,11 @@ pipeline {
             }
         }
         stage('Master') {
-            when{
+            when {
                 branch 'master'
             }
             steps {
-                timeout(time:30, unit:'SECONDS') {
+                timeout(time: 30, unit: 'SECONDS') {
                     script {
                         def wantChips = input id: 'mcd', message: 'Do you want chips whit that?', ok: 'Yes', submitterParameter: 'approver'
                         echo "Ok ${params.approver} you ${wantChips}!"
@@ -45,8 +45,8 @@ pipeline {
             }
         }
         stage('Slave') {
-            when{
-                not {branch 'master'}
+            when {
+                not { branch 'master' }
             }
             steps {
                 echo "YOU ARE NOT MY MUM!!!"
@@ -60,11 +60,13 @@ pipeline {
                 echo "We are done!"
                 rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'green', imageUrl: '', messageLink: '', text: 'Bye', thumbUrl: '', title: 'Bye', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':checkered_flag:', message: 'My work is done!'
             }
-  environment {
-    DEPLOY_TO = 'default'
-  }
-  parameters {
-    string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: '')
-    string(name: 'PERSON', defaultValue: 'mr Bean', description: 'Who\'s there?')
-  }
+            environment {
+                DEPLOY_TO = 'default'
+            }
+            parameters {
+                string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: '')
+                string(name: 'PERSON', defaultValue: 'mr Bean', description: 'Who\'s there?')
+            }
+        }
+    }
 }
