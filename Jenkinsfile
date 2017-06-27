@@ -62,53 +62,7 @@ pipeline {
 
             }
         }
-        stage("Parallels") {
-            steps {
-                parallel(
-                        "master": {
-                            stage("P-Master") {
-                                when {
-                                    branch 'master'
-                                }
-                                steps {
-                                    echo "Parallels - P-Master"
-                                }
-                            }
-                        },
-                        "slave": {
-                            stage("P-Slave") {
-                                when {
-                                    branch 'slave'
-                                }
-                                steps {
-                                    echo "Parallels - P-Slave"
-                                }
-                            }
-                        },
-                        "both-but-not-feature": {
-                            stage("P-Both") {
-                                when {
-                                    anyOf { branch 'slave'; branch 'master' }
-                                }
-                                steps {
-                                    echo "Parallels - Both but never anything else"
-                                }
-                            }
-                        },
-                        "parameter": {
-                            stage("P-parameter") {
-                                when {
-                                    environment name: 'DEPLOY_ENV', value 'dev'
-
-                                }
-                                steps {
-                                    echo "Deploying to DEV"
-                                }
-                            }
-                        }
-                )
-            }
-        }
+        
 
         stage('End') {
             steps {
