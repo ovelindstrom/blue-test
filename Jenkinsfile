@@ -1,12 +1,5 @@
 pipeline {
-    agent any
-    environment {
-        DEPLOY_TO = 'default'
-    }
-    parameters {
-        string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: '')
-        string(name: 'PERSON', defaultValue: 'mr Bean', description: 'Who\'s there?')
-    }
+  agent any
     stages {
         stage('Init'){
             steps{
@@ -67,6 +60,11 @@ pipeline {
                 echo "We are done!"
                 rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'green', imageUrl: '', messageLink: '', text: 'Bye', thumbUrl: '', title: 'Bye', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':checkered_flag:', message: 'My work is done!'
             }
-        }
-    }
+  environment {
+    DEPLOY_TO = 'default'
+  }
+  parameters {
+    string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: '')
+    string(name: 'PERSON', defaultValue: 'mr Bean', description: 'Who\'s there?')
+  }
 }
