@@ -54,8 +54,12 @@ pipeline {
 
                     timeout(time: 30, unit: 'SECONDS') {
                         rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'red', imageUrl: '', messageLink: '', text: 'Input waiting', thumbUrl: '', title: 'Input waiting', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':waiting:', message: 'We need your input'
-                        def wantChips = input id: 'mcd', message: 'Do you want chips whit that?', ok: 'Yes', submitterParameter: 'approver'
-                        echo "Ok ${params.approver} you ${wantChips}!"
+
+                        script {
+                            env.RELEASE_SCOPE = input id: 'release', message: 'What sort of release is it?', ok: 'Release!',
+                                    parameters: [choice(name: 'RELEASE_SCOPE', choices: 'patch\nminor\nmajor', description: 'What is the release scope?')]
+                        }
+                        echo "${env.RELEASE_SCOPE}"
                     }
                 }
             }
