@@ -65,6 +65,15 @@ pipeline {
             }
         }
 
+        stage('Patch-Release'){
+            when {
+                environment name: 'RELEASE_SCOPE', value:'patch'
+            }
+            steps {
+                rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'red', imageUrl: '', messageLink: '', text: "Patch", thumbUrl: '', title: 'Patch', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':patch:', message: "Patch Release"
+            }
+        }
+
         stage('Slave') {
             when {
                 not { branch 'master' }
@@ -76,12 +85,18 @@ pipeline {
             }
         }
 
+    }
 
-        stage('End') {
-            steps {
-                echo "We are done!"
-                rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'green', imageUrl: '', messageLink: '', text: 'Bye', thumbUrl: '', title: 'Bye', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':checkered_flag:', message: 'My work is done!'
-            }
+    post {
+        always {
+            echo "We are done!"
+            rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'green', imageUrl: '', messageLink: '', text: 'Bye', thumbUrl: '', title: 'Bye', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':checkered_flag:', message: 'My work is done!'
+        }
+
+        failure {
+            echo "We are done, but something went wrong."
+            rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'red', imageUrl: '', messageLink: '', text: 'ERROR', thumbUrl: '', title: 'ERROR', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':error:', message: 'ERROR!'
+
         }
     }
 }
