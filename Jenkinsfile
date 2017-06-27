@@ -11,6 +11,7 @@ pipeline {
         stage('Init'){
             steps{
                 echo "This is just a demo."
+                rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'green', imageUrl: '', messageLink: '', text: 'Starting', thumbUrl: '', title: 'Starting', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':clapper:', message: 'Hi from Jenkins'
             }
         }
 
@@ -23,9 +24,11 @@ pipeline {
                         "Hello1": {
                             echo "Hello ${params.PERSON}!"
                             sh 'printenv'
+                            rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'blue', imageUrl: '', messageLink: '', text: 'Hello', thumbUrl: '', title: 'Hello1', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':wave:', message: 'Hello1'
                         },
                         "Hello2": {
                             echo "Your current deploy environment is ${env.DEPLOY_TO}"
+                            rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'yellow', imageUrl: '', messageLink: '', text: 'Hello', thumbUrl: '', title: 'Hello2', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':baby:', message: 'Hello2'
                         }
                 )
             }
@@ -49,6 +52,7 @@ pipeline {
             }
             steps {
                 echo "YOU ARE NOT MY MUM!!!"
+                rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'blue', imageUrl: '', messageLink: '', text: 'Slave', thumbUrl: '', title: 'Slave', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':woman:', message: 'YOU ARE NOT MY MUM!!'
 
             }
         }
@@ -56,7 +60,7 @@ pipeline {
         stage('End') {
             steps {
                 echo "We are done!"
-
+                rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'green', imageUrl: '', messageLink: '', text: 'Bye', thumbUrl: '', title: 'Bye', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':checkered_flag:', message: 'My work is done!'
             }
         }
     }
