@@ -55,12 +55,6 @@
             <id>nexus-st-deployment</id>
             <username>msfss-jenkins</username>
             <password>{2tj/kvcHTE0HZKrS+SO1qkqQhFZ6hW1yKou+++Q0vJQ=}</password>
-            <!--password>FRUKiSijt4</password-->
-        </server>
-        <server>
-            <id>nexus-deployment</id>
-            <username>msfss-teamcity</username>
-            <password>sdfergt@686skjdsd</password>
         </server>
     </servers>
 </settings>
