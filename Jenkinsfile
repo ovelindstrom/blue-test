@@ -50,19 +50,23 @@ pipeline {
                 )
             }
         }
-        stage('Master') {
+        stage('Release-Master') {
             when {
                 branch 'master'
             }
             steps {
                 script {
 
-                    timeout(time: 30, unit: 'SECONDS') {
+                    timeout(time: 60, unit: 'SECONDS') {
                         rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'red', imageUrl: '', messageLink: '', text: "We need your input at ${env.RUN_DISPLAY_URL}", thumbUrl: '', title: 'Select release type', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':waiting:', message: "Input needed"
 
                         script {
                             env.RELEASE_SCOPE = input id: 'release', message: 'What sort of release is it?', ok: 'Release!',
-                                    parameters: [choice(name: 'RELEASE_SCOPE', choices: 'patch\nminor\nmajor', description: 'What is the release scope?')]
+                                    parameters: [choice(name: 'RELEASE_SCOPE', choices: 'revision\nminor\nmajor', description: 'What is the release scope?')]
+
+                            model = readMavenPom
+
+                            echo "POM version is ${model.getVersion()}"
                         }
                         echo "${env.RELEASE_SCOPE}"
                     }
@@ -70,14 +74,6 @@ pipeline {
             }
         }
 
-        stage('Patch-Release'){
-            when {
-                environment name: 'RELEASE_SCOPE', value:'patch'
-            }
-            steps {
-                rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'red', imageUrl: '', messageLink: '', text: "Patch", thumbUrl: '', title: 'Patch', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':patch:', message: "Patch Release"
-            }
-        }
 
         stage('Slave') {
             when {
