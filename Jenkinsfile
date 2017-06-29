@@ -64,9 +64,9 @@ pipeline {
                             env.RELEASE_SCOPE = input id: 'release', message: 'What sort of release is it?', ok: 'Release!',
                                     parameters: [choice(name: 'RELEASE_SCOPE', choices: 'revision\nminor\nmajor', description: 'What is the release scope?')]
 
-                            model = readMavenPom
+                            def pom = readMavenPom file: 'pom.xml'
 
-                            echo "POM version is ${model.getVersion()}"
+                            echo "POM version is ${pom.version}"
                         }
                         echo "${env.RELEASE_SCOPE}"
                     }
