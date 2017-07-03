@@ -65,7 +65,7 @@ pipeline {
 
                     echo "Releasing version ${releaseVersion}"
 
-                    sh "mvn -B -Dsettings.security=./settings-security.xml -s settings.xml -DreleaseVersion=${releaseVersion} -DdevelopmentVersion=${pom.version} -Dtag=v${releaseVersion} -DpushChanges=false -DlocalCheckout=true -DpreparationGoals=initialize release:prepare release:perform"
+                    sh "mvn -B -Dsettings.security=./settings-security.xml -s settings.xml -DreleaseVersion=${releaseVersion} -DdevelopmentVersion=${pom.version} -DpushChanges=false -DlocalCheckout=true -DpreparationGoals=initialize release:prepare release:perform"
                 }
             }
         }
