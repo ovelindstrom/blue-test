@@ -59,24 +59,16 @@ pipeline {
             }
             steps {
                 script {
+                    def pom = readMavenPom file: 'pom.xml'
 
-                    timeout(time: 60, unit: 'SECONDS') {
+                    def releaseVersion = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")
 
-                        script {
-                            def pom = readMavenPom file: 'pom.xml'
+                    echo "Releasing version ${releaseVersion}"
 
-                            def releaseVersion = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")
-
-                            echo "Releasing version ${releaseVersion}"
-
-                            sh "mvn -B -Dsettings.security=./settings-security.xml -s settings.xml -DreleaseVersion=${releaseVersion} -DdevelopmentVersion=${pom.version} -Dtag=v${releaseVersion} -DpushChanges=false -DlocalCheckout=true -DpreparationGoals=initialize release:prepare release:perform"
-                        }
-
-                    }
+                    sh "mvn -B -Dsettings.security=./settings-security.xml -s settings.xml -DreleaseVersion=${releaseVersion} -DdevelopmentVersion=${pom.version} -Dtag=v${releaseVersion} -DpushChanges=false -DlocalCheckout=true -DpreparationGoals=initialize release:prepare release:perform"
                 }
             }
         }
-
 
         stage('Step version') {
             when {
