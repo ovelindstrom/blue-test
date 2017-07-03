@@ -22,6 +22,8 @@ pipeline {
         stage('Init') {
             steps {
                 echo "This is just a demo."
+                sh "git config --global user.email \"jenkins@blue.org\""
+                sh "git config --global user.name \"Jenkins Blue\""
                 rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'green', imageUrl: '', messageLink: '', text: 'Starting', thumbUrl: '', title: 'Starting', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':clapper:', message: 'Hi from Jenkins'
             }
         }
