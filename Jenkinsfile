@@ -75,59 +75,59 @@ pipeline {
                     }
                 }
             }
+        }
 
 
+        stage('Step version') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
 
-            stage('Step version') {
-                when {
-                    branch 'master'
-                }
-                steps {
-                    script {
+                    timeout(time: 14, unit: 'MINUTES') {
+                        rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'red', imageUrl: '', messageLink: '', text: "We need your input at ${env.RUN_DISPLAY_URL}", thumbUrl: '', title: 'Select release type', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':waiting:', message: "Input needed"
 
-                        timeout(time: 14, unit: 'MINUTES') {
-                            rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'red', imageUrl: '', messageLink: '', text: "We need your input at ${env.RUN_DISPLAY_URL}", thumbUrl: '', title: 'Select release type', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':waiting:', message: "Input needed"
+                        script {
+                            def stepVersion = input id: 'StepVersion', message: 'Do you want to step the version?', parameters: [booleanParam(defaultValue: false, description: '', name: 'stepVersion')]
+                            if (stepVersion) {
+                                def developmentVersion = input id: 'NextVersion', message: 'What is the next version?'
 
-                            script {
-                                def stepVersion = input id: 'StepVersion', message: 'Do you want to step the version?', parameters: [booleanParam(defaultValue: false, description: '', name: 'stepVersion')]
-                                if(stepVersion) {
-                                    def developmentVersion = input id: 'NextVersion', message: 'What is the next version?'
-
-                                    sh "mvn -B -Dsettings.security=./settings-security.xml -s settings.xml -DdevelopmentVersion=${developmentVersion} release:update-versions"
-                                }
-
+                                sh "mvn -B -Dsettings.security=./settings-security.xml -s settings.xml -DdevelopmentVersion=${developmentVersion} release:update-versions"
                             }
 
                         }
+
                     }
                 }
             }
-
-
-            stage('Slave') {
-                when {
-                    not { branch 'master' }
-                }
-                steps {
-                    echo "YOU ARE NOT MY MUM!!!"
-                    rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'blue', imageUrl: '', messageLink: '', text: 'Slave', thumbUrl: '', title: 'Slave', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':woman:', message: 'YOU ARE NOT MY MUM!!'
-
-                }
-            }
-
         }
 
-        post {
-            always {
-                echo "We are done!"
-                rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'green', imageUrl: '', messageLink: '', text: 'Bye', thumbUrl: '', title: 'Bye', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':checkered_flag:', message: 'My work is done!'
-            }
 
-            failure {
-                echo "We are done, but something went wrong."
-                rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'red', imageUrl: '', messageLink: '', text: 'ERROR', thumbUrl: '', title: 'ERROR', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':error:', message: 'ERROR!'
+        stage('Slave') {
+            when {
+                not { branch 'master' }
+            }
+            steps {
+                echo "YOU ARE NOT MY MUM!!!"
+                rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'blue', imageUrl: '', messageLink: '', text: 'Slave', thumbUrl: '', title: 'Slave', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':woman:', message: 'YOU ARE NOT MY MUM!!'
 
             }
+        }
+
+    }
+
+    post {
+        always {
+            echo "We are done!"
+            rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'green', imageUrl: '', messageLink: '', text: 'Bye', thumbUrl: '', title: 'Bye', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':checkered_flag:', message: 'My work is done!'
+        }
+
+        failure {
+            echo "We are done, but something went wrong."
+            rocketSend attachments: [[audioUrl: '', authorIcon: '', authorName: '', color: 'red', imageUrl: '', messageLink: '', text: 'ERROR', thumbUrl: '', title: 'ERROR', titleLink: '', titleLinkDownload: '', videoUrl: '']], channel: 'jenkins', emoji: ':error:', message: 'ERROR!'
+
         }
     }
+}
 }
