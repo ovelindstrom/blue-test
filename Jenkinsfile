@@ -67,7 +67,9 @@ pipeline {
 
                     echo "Releasing version ${releaseVersion}"
 
-                    sh "mvn -B -Dsettings.security=./settings-security.xml -s settings.xml -DreleaseVersion=${releaseVersion} -DdevelopmentVersion=${pom.version} -DpushChanges=false -DlocalCheckout=true -DpreparationGoals=initialize release:prepare release:perform"
+                    configFileProvider([configFile('playground-dev')]) {
+                        sh "mvn -B -DreleaseVersion=${releaseVersion} -DdevelopmentVersion=${pom.version} -DpushChanges=false -DlocalCheckout=true -DpreparationGoals=initialize release:prepare release:perform"
+                    }
                 }
             }
         }
